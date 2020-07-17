@@ -1,7 +1,7 @@
 User.create!([ 
-  { first_name: "moshe", last_name: "segelman", user_name: "msegelman", email: "moshe@gmail.com", password: "password", password_confirmation: "password"},
-  { first_name: "jack", last_name: "smith", user_name: "jsmith", email: "jack@gmail.com", password: "password", password_confirmation: "password"},
-  { first_name: "jill", last_name: "parky", user_name: "jparky", email: "jill@gmail.com", password: "password", password_confirmation: "password"}
+  { first_name: "moshe", last_name: "segelman", username: "msegelman", email: "moshe@gmail.com", password: "password", password_confirmation: "password"},
+  { first_name: "jack", last_name: "smith", username: "jsmith", email: "jack@gmail.com", password: "password", password_confirmation: "password"},
+  { first_name: "jill", last_name: "parky", username: "jparky", email: "jill@gmail.com", password: "password", password_confirmation: "password"}
 ])
 
 Subject.create!([ 

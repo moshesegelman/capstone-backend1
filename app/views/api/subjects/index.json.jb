@@ -1,0 +1,4 @@
+@subjects.map do |subject|
+  render partial: "subject.json.jb",
+  locals: {subject: subject}
+end

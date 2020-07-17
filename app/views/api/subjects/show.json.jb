@@ -1,0 +1,7 @@
+# subject = 
+render partial: "subject.json.jb",
+locals: {subject: @subject}
+
+# subject[:channels] = @subject.channels
+
+# subject

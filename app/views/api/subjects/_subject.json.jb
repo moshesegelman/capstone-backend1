@@ -1,0 +1,6 @@
+{
+  id: subject.id,
+  name: subject.name,
+  image_url: subject.image_url,
+  # channel_count: subject.channels.count
+}
