@@ -1,0 +1,4 @@
+@channels.map do |channel|
+  render partial: "channel.json.jb",
+  locals: {channel: channel}
+end
