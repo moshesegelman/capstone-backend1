@@ -5,5 +5,5 @@
   subject: channel.subject.name,
   subject_id: channel.subject_id,
   user_id: channel.user_id,
-  # creator: channel.user.username
+  creator: channel.user.username
 }
