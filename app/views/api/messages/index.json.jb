@@ -1,0 +1,4 @@
+@messages.map do |message|
+  render partial: "message.json.jb",
+  locals: {message: message}
+end
