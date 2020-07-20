@@ -21,5 +21,11 @@ RSpec.describe "Users", type: :request do
       expect(response).to have_http_status(200)
       expect(user["first_name"]).to eq("Test")
     end
+    it "should return unauthorized user" do
+      user = User.first
+      get "/api/users/#{user.id}"
+      user = JSON.parse(response.body)
+      expect(response).to have_http_status(401)
+    end
   end
 end
