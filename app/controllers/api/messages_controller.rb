@@ -8,17 +8,21 @@ class Api::MessagesController < ApplicationController
   end
 
   def create
-    @message = Message.new(
-      text: params[:text],
-      channel_id: params[:channel_id],
-      conversation_id: params[:conversation_id],
-      user_id: current_user.id
-    )
+    if current_user
+      @message = Message.new(
+        text: params[:text],
+        channel_id: params[:channel_id],
+        conversation_id: params[:conversation_id],
+        user_id: current_user.id
+      )
 
-    if @message.save
-      render 'show.json.jb'
+      if @message.save
+        render 'show.json.jb'
+      else
+        render json: {error: @message.errors.full_messages}, status: :unprocessable_entity
+      end
     else
-      render json: {error: @message.errors.full_messages}, status: :unprocessable_entity
+      render json: {error: @message.errors.full_messages}, status: :unauthorized
     end
   end
 

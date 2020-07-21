@@ -7,26 +7,41 @@ class Api::ConversationsController < ApplicationController
   end
 
   def show
-    @conversation = Conversation.find(params[:id])
-    render 'show.json.jb'
+    user = User.find(params[:id])
+    if current_user == user
+      @conversation = Conversation.find(params[:id])
+      render 'show.json.jb'
+    else
+      render json: {error: @conversation.errors.full_messages}, status: :unauthorized
+    end
   end
 
   def create
-    @conversation = Conversation.new(
-      recipient_id: params[:recipient_id],
-      sender_id: current_user.id
-    )
+    user = User.find(params[:id])
+    if current_user == user
+      @conversation = Conversation.new(
+        recipient_id: params[:recipient_id],
+        sender_id: current_user.id
+      )
 
-    if @conversation.save
-      render 'show.json.jb'
-    else
-      render json: {error: @conversation.errors.full_messages}, status: :unprocessable_entity
+      if @conversation.save
+        render 'show.json.jb'
+      else
+        render json: {error: @conversation.errors.full_messages}, status: :unprocessable_entity
+      end
+    else 
+      render json: {error: @conversation.errors.full_messages}, status: :unauthorized_user 
     end
   end
 
   def destroy
-    @conversation = Conversation.find(params[:id])
-    @conversation.destroy
-    render json: {message: "conversation has been deleted"}
+    user = User.find(params[:id])
+    if current_user == user
+      @conversation = Conversation.find(params[:id])
+      @conversation.destroy
+      render json: {message: "conversation has been deleted"}
+    else
+      render json: {error: @conversation.errors.full_messages}, status: :unauthorized_user
+    end
   end
 end

@@ -5,6 +5,8 @@ class Api::UsersController < ApplicationController
     @user = User.find(params[:id])
     if current_user == @user
       render "show.json.jb"
+    else
+      render json: { errors: @user.errors.full_messages }, status: :unauthorized
     end
   end
 
@@ -26,8 +28,7 @@ class Api::UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if @user == current_user
-      @user = current_user
+    if @user == current_user 
       @user.first_name = params[:first_name] || @user.first_name
       @user.last_name = params[:last_name] || @user.last_name
       @user.username = params[:username] || @user.username
@@ -36,10 +37,12 @@ class Api::UsersController < ApplicationController
         @user.password = params[:password]
         @user.password_confirmation = params[:password_confirmation]
       end
-    end
 
-    if @user.save
-      render 'show.json.jb'
+      if @user.save
+        render 'show.json.jb'
+      else
+        render json: {error: @message.errors.full_messages}, status: :unprocessable_entity
+      end
     else
       render json: { errors: @user.errors.full_messages }, status: :unauthorized
     end

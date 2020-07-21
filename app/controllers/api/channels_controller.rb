@@ -8,16 +8,20 @@ class Api::ChannelsController < ApplicationController
   end
 
   def create
-    @channel = Channel.new(
-      name: params[:name],
-      details: params[:details],
-      subject_id: params[:subject_id],
-      user_id: current_user.id
-    )
-    if @channel.save
-      render 'show.json.jb'
+    if current_user
+      @channel = Channel.new(
+        name: params[:name],
+        details: params[:details],
+        subject_id: params[:subject_id],
+        user_id: current_user.id
+      )
+      if @channel.save
+        render 'show.json.jb'
+      else
+        render json: {error: @channel.errors.full_messages}, status: :unprocessable_entity
+      end
     else
-      render json: {error: @channel.errors.full_messages}, status: :unprocessable_entity
+      ender json: {error: @channel.errors.full_messages}, status: :unauthorized
     end
   end
 
