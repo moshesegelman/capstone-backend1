@@ -5,8 +5,4 @@ user[:channels] = @user.channels.map do |channel|
   render partial: "api/channels/channel", locals: {channel: channel}
 end
 
-user[:conversations] = @user.conversations.map do |conversation|
-  render partial: "api/conversations/conversation", locals: {conversation: conversation}
-end 
-
 user

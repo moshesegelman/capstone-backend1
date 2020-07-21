@@ -1,6 +1,8 @@
 subject = render partial: "subject.json.jb",
 locals: {subject: @subject}
 
-subject[:channels] = @subject.channels
+subject[:channels] = @subject.channels.map do |channel|
+  render partial: "api/channels/channel", locals: {channel: channel}
+end
 
 subject
