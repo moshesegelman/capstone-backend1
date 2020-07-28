@@ -6,7 +6,6 @@
     convo[:partner] = render partial: "/api/users/user", locals: {user: conversation.sender}
   else
     convo[:partner] = render partial: "/api/users/user", locals: {user: conversation.recipient}
-  end 
-
+  end
   convo
 end

@@ -1,2 +1,7 @@
 render partial: "message.json.jb",
 locals: {message: @message}
+
+# message[:creator] = render partial: "api/users/user", 
+# locals: {user: @message.user}
+
+# message

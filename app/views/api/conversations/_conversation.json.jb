@@ -1,5 +1,5 @@
 {
   id: conversation.id,
   sender_id: conversation.sender.id,
-  recipient_id: conversation.recipient.id,
+  recipient_id: conversation.recipient.id
 }
