@@ -22,6 +22,7 @@ class Api::ConversationsController < ApplicationController
         sender_id: current_user.id
       )
 
+
       if @conversation.save
         render 'show.json.jb'
       else

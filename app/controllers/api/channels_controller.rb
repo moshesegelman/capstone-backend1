@@ -15,6 +15,8 @@ class Api::ChannelsController < ApplicationController
         subject_id: params[:subject_id],
         user_id: current_user.id
       )
+
+
       if @channel.save
         render 'show.json.jb'
       else
