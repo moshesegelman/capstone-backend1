@@ -4,5 +4,6 @@
   details: channel.details,
   subject: channel.subject.name,
   subject_id: channel.subject_id,
-  user_id: channel.user_id
+  user_id: channel.user_id,
+  created_at: channel.created_at
 }
