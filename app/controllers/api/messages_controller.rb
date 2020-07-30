@@ -16,18 +16,17 @@ class Api::MessagesController < ApplicationController
         user_id: current_user.id
       )
 
-      ActionCable.server.broadcast "messages_channel", {
-        id: @message.id,
-        text: @message.text,
-        user_id: @message.user_id,
-        channel_id: @message.channel_id,
-        conversation_id: @message.conversation_id,
-        creator: @message.user.username,
-        created_at: @message.created_at
-      }
-      
-
+   
       if @message.save
+        ActionCable.server.broadcast "messages_channel", {
+          id: @message.id,
+          text: @message.text,
+          user_id: @message.user_id,
+          channel_id: @message.channel_id,
+          conversation_id: @message.conversation_id,
+          creator: @message.user.username,
+          created_at: @message.created_at
+        }  
         render 'show.json.jb'
       else
         render json: {error: @message.errors.full_messages}, status: :unprocessable_entity
@@ -39,9 +38,10 @@ class Api::MessagesController < ApplicationController
 
   def destroy
     @message = Message.find(params[:id])
+    
     if current_user.id == @message.user_id
-    @message.destroy
-    render json: {message: "message has been deleted"}
+      @message.destroy
+      render json: {message: "message has been deleted"}
     else
       render json: {error: @message.errors.full_messages}, status: :unauthorized
     end

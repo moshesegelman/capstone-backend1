@@ -22,6 +22,11 @@ class Api::ConversationsController < ApplicationController
         sender_id: current_user.id
       )
 
+      ActionCable.server.broadcast "messages_channel", {
+        id: @conversation.id,
+        sender_id: @conversation.sender.id,
+        recipient_id: @conversation.recipient.id
+      }
 
       if @conversation.save
         render 'show.json.jb'
