@@ -33,6 +33,12 @@ Rails.application.routes.draw do
     post "/conversations" => "conversations#create"
      # patch "/conversations/:id" => "conversations#update"
     delete "/conversations/:id" => "conversations#destroy"
+
+    get "/friends" => "friends#index"
+    # get "/friends/:id" => "friends#show"
+    post "/friends" => "friends#create"
+    patch "/friends/:id" => "friends#update"
+    delete "/friends/:id" => "friends#destroy"
   
  
     post "/sessions" => "sessions#create"

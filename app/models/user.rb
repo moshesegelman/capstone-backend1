@@ -11,4 +11,26 @@ class User < ApplicationRecord
   def conversations
     Conversation.where("sender_id = ? OR recipient_id = ?", id, id)
   end
+
+  def pending_friends
+    friend = Friend.where("user1_id = ? OR user2_id = ?", id, id).where(pending: true)
+    friend.map do |f|
+      if f.user1_id == id
+        {id: f.id, user: f.user2}
+      else
+        {id: f.id, user: f.user1}
+      end
+    end
+  end
+  def friends
+    friend = Friend.where("user1_id = ? OR user2_id = ?", id, id).where(pending: false)
+    friend.map do |f|
+      if f.user1_id == id
+        {id: f.id, user: f.user2}
+      else
+        {id: f.id, user: f.user1}
+      end
+    end
+  end
+
 end
