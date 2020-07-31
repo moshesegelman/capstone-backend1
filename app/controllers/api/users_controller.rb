@@ -41,7 +41,7 @@ class Api::UsersController < ApplicationController
       if @user.save
         render 'show.json.jb'
       else
-        render json: {error: @message.errors.full_messages}, status: :unprocessable_entity
+        render json: {error: @user.errors.full_messages}, status: :unprocessable_entity
       end
     else
       render json: { errors: @user.errors.full_messages }, status: :unauthorized

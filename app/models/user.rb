@@ -16,9 +16,9 @@ class User < ApplicationRecord
     friend = Friend.where("user1_id = ? OR user2_id = ?", id, id).where(pending: true)
     friend.map do |f|
       if f.user1_id == id
-        {id: f.id, user: f.user2}
+        {id: f.id, sender_id: f.user1_id, user: f.user2}
       else
-        {id: f.id, user: f.user1}
+        {id: f.id, sender_id: f.user1_id, user: f.user1}
       end
     end
   end
@@ -26,9 +26,9 @@ class User < ApplicationRecord
     friend = Friend.where("user1_id = ? OR user2_id = ?", id, id).where(pending: false)
     friend.map do |f|
       if f.user1_id == id
-        {id: f.id, user: f.user2}
+        {id: f.id,  user: f.user2}
       else
-        {id: f.id, user: f.user1}
+        {id: f.id,   user: f.user1}
       end
     end
   end

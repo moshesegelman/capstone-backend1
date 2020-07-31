@@ -3,10 +3,14 @@ all_friends[:friends] = @friends.map do |friend|
   f = {id: friend[:id]}
   f[:user] = render partial: "api/users/user",
     locals: {user: friend[:user]}
+  f
 end
 all_friends[:pending_friends] = @pending_friends.map do |friend|
-  f = {id: friend[:id]}
+  f = friend
   f[:user] = render partial: "api/users/user",
     locals: {user: friend[:user]}
+  f 
 end
 all_friends
+
+
