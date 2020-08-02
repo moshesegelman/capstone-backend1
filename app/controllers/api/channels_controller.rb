@@ -15,17 +15,18 @@ class Api::ChannelsController < ApplicationController
         subject_id: params[:subject_id],
         user_id: current_user.id
       )
-      ActionCable.server.broadcast "messages_channel", {
-        id: @channel.id,
-        name: @channel.name,
-        details: @channel.details,
-        subject: @channel.subject.name,
-        subject_id: @channel.subject_id,
-        user_id: @channel.user_id,
-        updated_at: @channel.updated_at
-      }
+   
 
       if @channel.save
+        # ActionCable.server.broadcast "messages_channel", {
+        #   id: @channel.id,
+        #   name: @channel.name,
+        #   details: @channel.details,
+        #   subject: @channel.subject.name,
+        #   subject_id: @channel.subject_id,
+        #   user_id: @channel.user_id,
+        #   updated_at: @channel.updated_at
+        # }
         render 'show.json.jb'
       else
         render json: {error: @channel.errors.full_messages}, status: :unprocessable_entity

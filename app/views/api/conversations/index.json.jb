@@ -7,7 +7,9 @@
   else
     convo[:partner] = render partial: "/api/users/user", locals: {user: conversation.recipient}
   end
-  convo[:last_message] = render partial: "api/messages/message", locals: {message: conversation.messages.last}
+  if conversation.messages.last
+    convo[:last_message] = render partial: "api/messages/message", locals: {message: conversation.messages.last}
+  end
 
   convo
 end

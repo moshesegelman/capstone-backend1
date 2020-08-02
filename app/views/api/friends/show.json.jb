@@ -1,0 +1,7 @@
+f = render partial: "friends",
+locals: {friend: @friend}
+
+f[:user] = render partial: "api/users/user",
+locals: {user: friend[:user]}
+
+f 

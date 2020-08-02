@@ -4,7 +4,7 @@ class Api::FriendsController < ApplicationController
     @pending_friends = current_user.pending_friends
     render 'index.json.jb'
   end
-  
+
   def create
     @friend = Friend.new(
       user1_id: current_user.id,
@@ -12,7 +12,8 @@ class Api::FriendsController < ApplicationController
       pending: true
     ) 
     if @friend.save
-      render json: {message: "friend request sent"}
+      partial = 'index.json.jb'
+      ActionCable.server.broadcast "friends_channel", "index.json.jb"
     else
       render json: {error: @friend.errors.full_messages}, status: :unprocessable_entity
     end
