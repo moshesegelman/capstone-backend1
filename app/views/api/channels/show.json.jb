@@ -1,9 +1,9 @@
 channel = render partial: 'channel.json.jb',
 locals: {channel: @channel}
 
-if @channel.user
-  channel[:creator] = @channel.user.username
-end
+
+channel[:creator] = @channel.user.username
+
 
 channel[:messages] = @channel.messages.map do |message|
   render partial: "api/messages/message", locals: {message: message}
