@@ -6,16 +6,24 @@ class Api::FriendsController < ApplicationController
   end
 
   def create
-    @friend = Friend.new(
-      user1_id: current_user.id,
-      user2_id: params[:user2_id],
-      pending: true
-    ) 
-    if @friend.save
-      partial = 'index.json.jb'
-      ActionCable.server.broadcast "friends_channel", "index.json.jb"
+    if Friend.exists?(user1_id: current_user.id, user2_id: params[:user2_id])
+      @friend = Friend.find_by(user1_id: current_user.id, user2_id:params[:user2_id])
+      render json: {message: "friend request already sent"}
+    elsif Friend.exists?(user1_id: params[:user2_id], user2_id: current_user.id)
+      @friend = Friend.find_by(user1_id: params[:user2_id], user2_id: current_user.id)
+      render json: {message: "friend request already sent"}
     else
-      render json: {error: @friend.errors.full_messages}, status: :unprocessable_entity
+      @friend = Friend.new(
+        user1_id: current_user.id,
+        user2_id: params[:user2_id],
+        pending: true
+      ) 
+      if @friend.save
+        partial = 'index.json.jb'
+        ActionCable.server.broadcast "friends_channel", "index.json.jb"
+      else
+        render json: {error: @friend.errors.full_messages}, status: :unprocessable_entity
+      end
     end
   end
 
